@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Template 0-02</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+      .mainbody{height:100vh;}
+      .inrmainbody{border:1px solid black;height:100vh;width:100vw;display:flex;justify-content: center;align-items: center;}
+      .gamebody{border:1px solid black;width:302px;height:402px;position: relative;}
+      .block{height:100px;width:100px;}
+      .block{top:200px;left:100px;}
+    </style>
+  </head>
+  <body>
+    <div class="mainbody">
+      <div class="inrmainbody">
+        <div class="gamebody">
+          <!-- <div class="block borx abs flex aic jcc">0</div> -->
+        </div>
+      </div>
+    </div>
+    <script>
+      //var mainbody = document.querySelector(".mainbody");
+      //var inrgmblock = document.querySelectorAll(".inrgmblock");
+      var gamebody = document.querySelector(".gamebody");
+      var number = [1,2,3,4,5,6,7,8,9,10,11,12];
+      var blockArray=[],blockCount=0;
+      createBlocks();
+      blockReArrangeColor();
+      blockReArrangeNumber();
+      function createBlocks(){
+        var a=0,b=0;
+        var height=100,width=100;
+        var widthLength = 3, heightLength = 4;
+        var topLength,leftLength;
+        for(a = 0; a < heightLength; a++){
+          for(b = 0; b < widthLength; b++){
+            blockArray[blockCount] = document.createElement('div');
+            const blockId = blockCount;
+            decorateEachBlock(blockArray[blockCount],a,b,blockId);
+            blockArray[blockId].addEventListener('click',()=>{
+              clickThisBlock(blockId);
+            });
+          }
+        }
+      }
+      function decorateEachBlock(blockVar,topLen,leftLen,blockId){
+        var height=100, width=100;
+        topLen = topLen * 100;
+        leftLen = leftLen * 100
+        blockVar.innerText = number[blockCount];
+        blockVar.style.height = height + "px";
+        blockVar.style.width = width + "px";
+        blockVar.style.border = "1px solid #000";
+        blockVar.style.fontSize = 26 + "px";
+        blockVar.style.position = "absolute";
+        blockVar.style.display = "flex";
+        blockVar.style.justifyContent = "center";
+        blockVar.style.alignItems = "center";
+        blockVar.style.top = topLen + "px";
+        blockVar.style.left = leftLen + "px";
+        gamebody.appendChild(blockVar);
+        blockCount++;
+      }
+      function clickThisBlock(blockId){
+        console.log(blockId)
+        checkTop(blockId)
+        checkRight(blockId)
+        checkBottom(blockId)
+        checkLeft(blockId)
+      }
+      
+      function checkTop(blockId){
+        var top = blockId - 3;
+        if(number[top] == 12){
+          console.log('top =',top,'exc',blockId,'with',top)
+          exchangeBlock(blockId,top);
+        }
+      }
+      function checkRight(blockId){
+        var right = blockId + 1;
+        if(right % 3 == 0){
+          right = "";
+        }
+        if(number[right] == 12){
+          console.log('right =',right,'exc',blockId,'with',right)
+          exchangeBlock(blockId,right);
+        }
+      }
+      function checkBottom(blockId){
+        var bottom = blockId + 3;
+        if(number[bottom] == 12){
+          console.log('bottom =',bottom,'exc',blockId,'with',bottom)
+          exchangeBlock(blockId,bottom);
+        }
+      }
+      function checkLeft(blockId){
+        var left = blockId - 1;
+        if(blockId % 3 == 0){
+          left = "";
+        }
+        if(number[left] == 12){
+          console.log('left =',left,'exc',blockId,'with',left)
+          exchangeBlock(blockId,left);
+        }
+      }
+      function exchangeBlock(clickBlock,emptyBlock){
+        var val1 = number[clickBlock];
+        var val2 = number[emptyBlock];
+        number[clickBlock] = val2;
+        number[emptyBlock] = val1;
+        blockReArrangeColor();
+        blockReArrangeNumber();
+      }
+      function blockReArrangeNumber(){
+        for(var a=0;a<12;a++){
+          blockArray[a].innerHTML = 'id = '+a+'</br> val = '+number[a];
+          blockArray[a].innerHTML = number[a];
+        }
+      }
+      function blockReArrangeColor(){
+        for(var a=0;a<12;a++){
+          blockArray[a].style.background = 'cyan';
+          if(number[a] == 12){
+            blockArray[a].style.background = 'white';
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
